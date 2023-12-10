@@ -1,6 +1,7 @@
 const { format } = require("date-fns");
 const { db } = require("../config/dabase");
 const { PRODUCT_QUERY } = require("../queries/product.query");
+const { SUCCESS_ENDPOINT } = require("../constants/success-endpoint");
 const currentDateTime = new Date();
 const formattedDateTime = format(currentDateTime, "yyyy-MM-dd HH:mm:ss");
 
@@ -26,7 +27,10 @@ const createProduct = (req, res) => {
     ],
     (err, result) => {
       if (err) throw err;
-      res.json({ message: "Product added successfully", id: result.insertId });
+      res.json({
+        message: SUCCESS_ENDPOINT.PRODUCT_CREATE,
+        id: result.insertId,
+      });
     }
   );
 };
@@ -47,7 +51,7 @@ const editProductById = (req, res) => {
     ],
     (err) => {
       if (err) throw err;
-      res.json({ message: "Products updated successfully" });
+      res.json({ message: SUCCESS_ENDPOINT.PRODUCT_UPDATE });
     }
   );
 };
@@ -56,7 +60,7 @@ const deleteProductById = (req, res) => {
   const { id } = req.params;
   db.query(PRODUCT_QUERY.DELETE, [id], (err) => {
     if (err) throw err;
-    res.json({ message: "Product deleted successfully" });
+    res.json({ message: SUCCESS_ENDPOINT.PRODUCT_DELTE });
   });
 };
 

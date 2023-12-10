@@ -4,4 +4,4 @@ const USER_QUERY = {
   EDIT: "UPDATE users SET fristName = ?,lastName = ?, email = ? WHERE id = ?",
   DELETE: "DELETE FROM users WHERE id = ?",
 };
-modules.exports = { USER_QUERY };
+module.exports = { USER_QUERY };

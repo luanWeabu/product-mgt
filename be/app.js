@@ -23,31 +23,32 @@ const {
 } = require("./services/product.service");
 const { upload } = require("./config/storageUpload");
 const { corsOptions } = require("./config/cors");
+const { API_ENDPOINT } = require("./constants/api-endpoint");
 
 //cors
 app.use(cors(corsOptions));
 
 //login
-app.post("/login", handleLogin);
-app.post("/refresh-token", handleRefreshToken);
+app.post(API_ENDPOINT.LOGIN, handleLogin);
+app.post(API_ENDPOINT.REFRESH_TOKEN, handleRefreshToken);
 
 //uploadfile
-app.post("/uploadfile", upload.single("image"), (req, res) => {
+app.post(API_ENDPOINT.UPLOAD_FILE, upload.single("image"), (req, res) => {
   const { filename } = req.file;
   return res.status(200).json({ filename });
 });
 
 //Users
-app.get("/users", getUser);
-app.post("/users", createUser);
-app.put("/users/:id", editUserById);
-app.delete("/users/:id", deleteUserById);
+app.get(API_ENDPOINT.USER, getUser);
+app.post(API_ENDPOINT.USER, createUser);
+app.put(`${API_ENDPOINT.USER}/:id`, editUserById);
+app.delete(`${API_ENDPOINT.USER}/:id`, deleteUserById);
 
 //Product
-app.get("/products", getProduct);
-app.post("/products", createProduct);
-app.put("/products/:id", editProductById);
-app.delete("/products/:id", deleteProductById);
+app.get(API_ENDPOINT.PRODUCT, getProduct);
+app.post(API_ENDPOINT.PRODUCT, createProduct);
+app.put(`${API_ENDPOINT.PRODUCT}/:id`, editProductById);
+app.delete(`${API_ENDPOINT.PRODUCT}/:id`, deleteProductById);
 
 //port
 app.listen(port, () => {

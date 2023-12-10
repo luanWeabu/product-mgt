@@ -1,4 +1,5 @@
 const { db } = require("../config/dabase");
+const { SUCCESS_ENDPOINT } = require("../constants/success-endpoint");
 const { USER_QUERY } = require("../queries/user.query");
 
 const getUser = (req, res) => {
@@ -13,7 +14,7 @@ const createUser = (req, res) => {
 
   db.query(USER_QUERY.CREATE, [firstname, lastname, email], (err, result) => {
     if (err) throw err;
-    res.json({ message: "User added successfully", id: result.insertId });
+    res.json({ message: SUCCESS_ENDPOINT.USER_CREATE, id: result.insertId });
   });
 };
 
@@ -22,7 +23,7 @@ const editUserById = (req, res) => {
   const { firstname, lastname, email } = req.body;
   db.query(USER_QUERY.EDIT, [firstname, lastname, email, id], (err) => {
     if (err) throw err;
-    res.json({ message: "User updated successfully" });
+    res.json({ message: SUCCESS_ENDPOINT.USER_UPDATE });
   });
 };
 
@@ -30,7 +31,7 @@ const deleteUserById = (req, res) => {
   const { id } = req.params;
   db.query(USER_QUERY.DELETE, [id], (err) => {
     if (err) throw err;
-    res.json({ message: "User deleted successfully" });
+    res.json({ message: SUCCESS_ENDPOINT.USER_DELETE });
   });
 };
 
